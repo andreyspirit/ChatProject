@@ -20,7 +20,7 @@
         <TextBlock Name="txt2_self" Text="{Binding Path=Self.Username}" Grid.Column="2" Grid.Row="0" HorizontalAlignment="Center" Margin="5,5,5,5"></TextBlock>
         <Button Name="btn2_send" Content="Send" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Center" Click="btn2_send_Click"></Button>
         <Button Name="btn2_logout" Content="Logout" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center"></Button>
-        <TextBox Name="txt2_message" Grid.Column="2" Grid.Row="2" HorizontalAlignment="Center"></TextBox>
+        <TextBox Name="txt2_message" Text="{Binding Path=Composed.Body}" Grid.Column="2" Grid.Row="2" HorizontalAlignment="Center"></TextBox>
         <ListBox Name="lb_contacts" ItemsSource="{Binding Contacts}" Grid.Column="0" Grid.Row="1" Grid.RowSpan="2">
             <ListBox.ItemTemplate>
                 <DataTemplate>

@@ -14,14 +14,18 @@ namespace ChatClient
     {
 
         public ObservableCollection<Message> Messages { get; set; }
-        public ObservableCollection<Contact> Contacts { get; set; } = new ObservableCollection<Contact>();
+        public ObservableCollection<Contact> Contacts { get; set; }
 
         public Contact Self { get; set; }
         public Contact Receiver { get; set; }
-        public ChatWindow()
+        public Message Composed { get; set; }
+        public ChatWindow(Contact self)
         {
             InitializeComponent();
             DataContext = this;
+            Contacts = new ObservableCollection<Contact>();
+            Composed = new Message();
+            Composed.Sender = self;
             getContacts();
 
 

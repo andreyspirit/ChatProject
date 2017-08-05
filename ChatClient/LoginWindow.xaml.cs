@@ -86,9 +86,8 @@ namespace ChatClient
         private void openChatDialog()
         {
             ChatWindow window;
-            window = new ChatWindow();
-            window.Self = new Contact();
-            bool? nu = window?.ShowDialog();
+            window = new ChatWindow(self);
+            bool? nu = window.ShowDialog();
             if (nu ?? true)
             {
 
