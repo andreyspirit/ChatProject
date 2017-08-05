@@ -1,8 +1,6 @@
 ﻿
 using ChatLibrary;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Windows;
@@ -30,17 +28,17 @@ namespace ChatClient
             SizeToContent = SizeToContent.WidthAndHeight;
             changeView(DEFAULTVIEW);
             setClickables();
-            using (var c = new HttpClient())
-            {
-                var result = c.GetAsync("http://localhost:40433/api/cookie").Result;
-                if (!result.IsSuccessStatusCode)
-                    return;
-                string resultContent = result.Content.ReadAsStringAsync().Result;
-                dynamic response = JsonConvert.DeserializeObject(resultContent);
-                Username = response.username;
-                txt1_password.Password = response.password;
-                PerformClick(btn_login);
-            }
+            //using (var c = new HttpClient())
+            //{
+            //    var result = c.GetAsync("http://localhost:40433/api/cookie").Result;
+            //    if (!result.IsSuccessStatusCode)
+            //        return;
+            //    string resultContent = result.Content.ReadAsStringAsync().Result;
+            //    dynamic response = JsonConvert.DeserializeObject(resultContent);
+            //    Username = response.username;
+            //    txt1_password.Password = response.password;
+            //    PerformClick(btn_login);
+            //}
         }
 
         private void changeView(bool valview)
@@ -83,6 +81,18 @@ namespace ChatClient
         private void setViewLOG(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             changeView(LOGVIEW);
+        }
+
+        private void openChatDialog()
+        {
+            ChatWindow window;
+            window = new ChatWindow();
+            window.Self = new Contact();
+            bool? nu = window?.ShowDialog();
+            if (nu ?? true)
+            {
+
+            }
         }
 
         private void btn_register_Click(object sender, RoutedEventArgs e)
@@ -135,18 +145,7 @@ namespace ChatClient
                 }
             }
 
-            ChatWindow window;
-            window = new ChatWindow();
-            window.Self = new Contact();
-            window.Self.ID = self.ID;
-            window.Self.Name = self.Name;
-            window.Self.Password = self.Password;
-            window.Self.Username = self.Username;
-            bool? nu = window?.ShowDialog();
-            if (nu ?? true)
-            {
-
-            }
+            openChatDialog();
         }
     }
 }
