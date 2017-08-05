@@ -16,8 +16,6 @@ namespace ChatClient
         public ObservableCollection<Message> Messages { get; set; }
         public ObservableCollection<Contact> Contacts { get; set; }
 
-        public Contact Self { get; set; }
-        public Contact Receiver { get; set; }
         public Message Composed { get; set; }
         public ChatWindow(Contact self)
         {
@@ -41,7 +39,7 @@ namespace ChatClient
                 Contacts.Clear();
                 foreach (var contact in contacts)
                 {
-                    if (contact.Username != Self.Username)
+                    if (contact.Username != Composed.Sender.Username)
                         Contacts.Add(contact);
                 }
             }
