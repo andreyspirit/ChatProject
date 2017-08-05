@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Net.Http;
+using System.Text;
 using System.Windows;
 
 namespace ChatClient
@@ -33,7 +34,7 @@ namespace ChatClient
         {
             using (HttpClient c = new HttpClient())
             {
-                var result = c.GetAsync("http://localhost:40433/api/contact").Result;
+                var result = c.GetAsync("http://localhost:40433/api/contacts").Result;
                 string resultContent = result.Content.ReadAsStringAsync().Result;
                 List<Contact> contacts = new List<Contact>( JsonConvert.DeserializeObject<IList<Contact>>(resultContent));
                 Contacts.Clear();
@@ -45,25 +46,39 @@ namespace ChatClient
             }
         }
 
+        private void getMessagesBySenderRecevier(Contact sender, Contact receiver)
+        {
+            using (HttpClient c = new HttpClient())
+            {
+                var serialized = JsonConvert.SerializeObject(new { sender = sender.ID, receiver = receiver.ID });
+                var content = new StringContent(serialized, Encoding.UTF8, "application/json");
+
+                var result = c.PostAsync("http://localhost:40433/api/messages",content).Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    string resultContent = result.Content.ReadAsStringAsync().Result;
+                    List<Message> messages = new List<Message>(JsonConvert.DeserializeObject<IList<Message>>(resultContent));
+                    Messages.Clear();
+                    foreach (var message in messages)
+                        Messages.Add(message);
+                }
+            }
+        }
+
         private void btn2_send_Click(object sender, RoutedEventArgs e)
         {
+            if (Composed == null || Composed.Sender == null || Composed.Receiver == null || string.IsNullOrEmpty(Composed.Body))
+                return;
+            Composed.Date = new System.DateTime();
             using (var c = new HttpClient())
             {
-                ////var serialized = JsonConvert.SerializeObject(new { username = Username, password = txt1_password.Password });
-                ////var content = new StringContent(serialized, Encoding.UTF8, "application/json");
+                var serialized = JsonConvert.SerializeObject(Composed);
+                var content = new StringContent(serialized, Encoding.UTF8, "application/json");
+                var result = c.PutAsync("http://localhost:40433/api/messages", content).Result;
+                if (result.IsSuccessStatusCode)
+                {
 
-                //Message msg = new Message();
-                //msg.Body = "body";
-                //msg.Date = new DateTime();
-                //msg.Sender = 
-                //var result = c.PostAsync("http://localhost:40433/api/send", ).Result;
-                //if (result.IsSuccessStatusCode)
-                //    MessageBox.Show("You are now logged in!");
-                //else
-                //{
-                //    MessageBox.Show("Login failed!");
-                //    return;
-                //}
+                }
             }
         }
     }

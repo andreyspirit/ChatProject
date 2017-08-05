@@ -65,19 +65,14 @@ namespace ChatLibrary
             return true;
         }
 
-        public bool addNewMessage(Message message)
+        public void addNewMessage(Message message)
         {
-            try
+            using (var db = new ChatContext())
             {
-                using (var db = new ChatContext())
-                {
-                    db.Messages.Attach(message);
-                    db.Messages.Add(message);
-                    db.SaveChanges();
-                }
-                return true;
+                db.Messages.Attach(message);
+                db.Messages.Add(message);
+                db.SaveChanges();
             }
-            catch { return false; }
         }
 
         public void removeMessage(Message message)
@@ -100,12 +95,19 @@ namespace ChatLibrary
 
         public Contact getContactByUsername(string username)
         {
-            Contact desired;
             using (var db = new ChatContext())
             {
-                desired = db.Contacts.SingleOrDefault(c => c.Username == username);
+                return db.Contacts.SingleOrDefault(c => c.Username == username);
             }
-            return desired;
+        }
+
+        public IList<Message> getMessagesBySenderReceiver(int sender_id,int receiver_id)
+        {
+            using (var db = new ChatContext())
+            {
+                return new List<Message>(db.Messages.
+                    Where(c => c.Sender.ID == sender_id && c.Receiver.ID == receiver_id));
+            }
         }
 
         public IList<Message> getMessages()
@@ -115,17 +117,5 @@ namespace ChatLibrary
                 return new List<Message>(db.Messages);
             }
         }
-
-
-        //public IList<Contact> getMessageContacts(int m_id)
-        //{
-        //    using (var db = new ChatContext())
-        //    {
-        //        var ContactInMessage = db.Messages.Where(m => m.ID == m_id)
-        //                                      .SelectMany(c => c.Contacts);
-        //        return new List<Contact>(ContactInMessage);
-        //    }
-        //}
-
     }
 }

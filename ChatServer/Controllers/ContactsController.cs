@@ -8,13 +8,14 @@ using System.Web.Http;
 
 namespace ChatServer.Controllers
 {
-    public class ContactController : ApiController
+    public class ContactsController : ApiController
     {
         [HttpGet]
         public HttpResponseMessage GetContacts()
         {
-            IList<Contact> dibila = new ChatService().getContacts();
-            return Request.CreateResponse(HttpStatusCode.OK,dibila);
+            IList<Contact> result = new ChatService().getContacts();
+            return Request.CreateResponse(HttpStatusCode.OK, result);
         }
     }
 }
+    
