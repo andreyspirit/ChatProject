@@ -1,0 +1,30 @@
+﻿<Window x:Class="ChatClient.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ChatClient"
+        mc:Ignorable="d"
+        Title="Login Window" Height="Auto" Width="Auto">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <TextBlock Name="txt1_welcome" Text="Welcome to Chat" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center"></TextBlock>
+        <TextBlock Name="txt1_register" Text="Register" Grid.Column="0" Grid.Row="6" HorizontalAlignment="Center" ></TextBlock>
+        <TextBlock Name="txt1_login" Text="Sign In" Grid.Column="0" Grid.Row="6" HorizontalAlignment="Center"></TextBlock>
+        <TextBox Name="txt1_username" Text="{Binding Username}" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" Width="100"></TextBox>
+        <PasswordBox Name="txt1_password" PasswordChar="*" Grid.Column="0" Grid.Row="2" ToolTip="Password" HorizontalAlignment="Center" Width="100"></PasswordBox>
+        <TextBox Name="txt1_fullname" Text="{Binding Fullname}" Grid.Column="0" Grid.Row="3" HorizontalAlignment="Center" Width="100"></TextBox>
+        <Button Name="btn_register" Content="Register" Grid.Column="0" Grid.Row="4" HorizontalAlignment="Center" Click="btn_register_Click"></Button>
+        <Button Name="btn_login" Content="Login" Grid.Column="0" Grid.Row="4" HorizontalAlignment="Center" Click="btn_login_Click"></Button>
+    </Grid>
+</Window>
